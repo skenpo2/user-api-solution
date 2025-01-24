@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
 
+// define user data schema
 const userSchema = new mongoose.Schema(
   {
     userName: {
@@ -20,6 +21,6 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+// creating a data model from schema
 const userModel = mongoose.model('user', userSchema);
 module.exports = userModel;
