@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
     const isRegisteredUser = await userModel.findOne({ email });
 
     if (!isRegisteredUser) {
-      return res.json({ message: 'User not exist, Please register' });
+      return res.json({ message: 'User does not exist, Please register' });
     }
 
     // checking if the provided password matched the password in database
@@ -64,10 +64,13 @@ const loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.json({ message: 'Password not valid' });
     }
-    // returning the users details  login
 
-    const { id, userName, email } = isRegisteredUser;
-    return res.json({ userDetails: { id, userName, email } });
+    // setting the user password to empty string to avoid being sent as response
+    isRegisteredUser.password = '';
+
+    // returning the user details without empty string as password
+
+    return res.json({ isRegisteredUser });
   } catch (error) {
     res.json({ message: 'Something went wrong' });
   }
@@ -86,7 +89,7 @@ const deleteUser = async (req, res) => {
     const isRegisteredUser = await userModel.findOne({ email });
 
     if (!isRegisteredUser) {
-      return res.json({ message: 'User not exist, Please register' });
+      return res.json({ message: 'User does not exist, Please register' });
     }
 
     // checking if the provided password matched the password in database

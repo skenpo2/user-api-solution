@@ -7,7 +7,7 @@ const {
 const routes = express.Router();
 
 routes.get('/', (req, res) => {
-  res.send('welcome user');
+  res.send('welcome, /register to register or /login to login');
 });
 routes.post('/register', createUser);
 routes.post('/login', loginUser);

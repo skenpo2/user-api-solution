@@ -21,7 +21,6 @@ mongoose
   });
 // using json middleware
 app.use(express.json());
-
 // user endpoints routes
 app.use(userRoute);
 
