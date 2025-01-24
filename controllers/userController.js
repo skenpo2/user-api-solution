@@ -38,19 +38,23 @@ const createUser = async (req, res) => {
   }
 };
 
-// function to Login
+// function to Login a registered user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  // checking if user has provided all the required details
   if (!(email && password))
     return res.json({ message: 'Please Provide your details' });
 
+  // checking if the user exist in the database
   try {
     const isRegisteredUser = await userModel.findOne({ email });
 
     if (!isRegisteredUser) {
       return res.json({ message: 'User not exist, Please register' });
     }
+
+    // checking if the provided password matched the password in database
 
     const isPasswordValid = bcrypt.compareSync(
       password,
@@ -60,19 +64,24 @@ const loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.json({ message: 'Password not valid' });
     }
+    // returning the users details  login
 
-    return res.json({ userDetails: isRegisteredUser });
+    const { id, userName, email } = isRegisteredUser;
+    return res.json({ userDetails: { id, userName, email } });
   } catch (error) {
     res.json({ message: 'Something went wrong' });
   }
 };
 
+// function to delete a registered user
 const deleteUser = async (req, res) => {
   const { email, password } = req.body;
 
+  // checking if user has provided all the required details
   if (!(email && password))
     return res.json({ message: 'Please Provide your details' });
 
+  // checking if the user exist in the database
   try {
     const isRegisteredUser = await userModel.findOne({ email });
 
@@ -80,6 +89,7 @@ const deleteUser = async (req, res) => {
       return res.json({ message: 'User not exist, Please register' });
     }
 
+    // checking if the provided password matched the password in database
     const isPasswordValid = bcrypt.compareSync(
       password,
       isRegisteredUser.password
@@ -88,7 +98,7 @@ const deleteUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.json({ message: 'Password not valid' });
     }
-
+    // find and delete the registered user details from the database
     await userModel.findOneAndDelete(email);
     return res.json({ message: 'User Deleted Successfully' });
   } catch (error) {
