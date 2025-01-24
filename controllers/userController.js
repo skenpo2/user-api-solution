@@ -65,7 +65,7 @@ const loginUser = async (req, res) => {
       return res.json({ message: 'Password not valid' });
     }
 
-    // setting the user password to empty string to avoid being sent as response
+    // setting the user password to empty string to avoid being sent with the  response
     isRegisteredUser.password = '';
 
     // returning the user details without empty string as password

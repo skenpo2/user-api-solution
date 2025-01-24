@@ -4,10 +4,11 @@
   "description": "Axia assignment",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Micheal Obarewon",
+  "author": "Michael Obarewon",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
